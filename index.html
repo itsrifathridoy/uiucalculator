@@ -310,6 +310,16 @@
         } else if (scholarshipBtn.ariaChecked == "true" && percent.value == 0) {
           title = "Error";
           message = "Please Enter Your Waivar/Scholarship Percentange";
+        } else if (
+          scholarshipBtn.ariaChecked == "true" &&
+          (percent.value > 100 ||
+            (percent.value > 0 && percent.value < 25) ||
+            (percent.value > 25 && percent.value < 50) ||
+            (percent.value > 50 && percent.value < 75) ||
+            (percent.value > 75 && percent.value < 100))
+        ) {
+          title = "Error";
+          message = "Invalid Scholarship Percentage";
         } else {
           let tuitionFee = credit.value * 5000;
           if (scholarshipBtn.ariaChecked == "true") {
@@ -347,7 +357,13 @@
 
           title = "Tuition Fee";
           subHeader = `Total Payable Amount: ${withTrimesterFee}`;
-          message = `1st Installment: ${installment_1}<br>2nd Installment: ${installment_2}<br>3rd Installment: ${installment_3}<br>4th Installment: ${installment_4}`;
+          message = `1st Installment: ${Math.round(
+            installment_1
+          )} (24 July)<br>2nd Installment: ${Math.round(
+            installment_2
+          )} (14 Aug)<br>3rd Installment: ${Math.round(
+            installment_3
+          )} (11 Sep)<br>4th Installment: ${Math.round(installment_4)} (2 Oct)`;
           flag = 1;
         }
         const alert = await alertController.create({
@@ -363,9 +379,9 @@
           let alertOkBtn = document.getElementsByClassName("alert-button")[0];
           alertOkBtn.addEventListener("click", alertOk);
           function alertOk() {
-            trimester.value = "Select";
-            credit.value = "";
-            percent.value = "";
+            // trimester.value = "Select";
+            // credit.value = "";
+            // percent.value = "";
             alreadyPaid = 0;
             document.getElementsByTagName("ion-input")[2].value = "";
           }
